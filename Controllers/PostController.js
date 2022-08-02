@@ -29,12 +29,27 @@ export const getAllPosts = async (req, res) => {
   try {
     const posts = await PostModel.find().exec();
 
-    console.log(posts);
     res.json(posts);
   } catch (error) {
     console.log(error);
     res.status(500).json({
       message: 'Не удалось получить статьи',
+    });
+  }
+};
+
+export const getOnePost = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const post = await PostModel.findOne({ _id: id });
+
+    console.log(id);
+    res.json(post);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: 'Не удалось получить статью',
     });
   }
 };

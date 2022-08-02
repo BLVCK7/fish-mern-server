@@ -22,5 +22,6 @@ app.use(express.json());
 
 app.post('/post', PostController.create);
 app.get('/post', PostController.getAllPosts);
+app.get('/post/:id', PostController.getOnePost);
 
 app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`));
