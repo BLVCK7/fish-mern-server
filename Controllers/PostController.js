@@ -11,6 +11,8 @@ export const create = async (req, res) => {
       windPower: req.body.windPower,
       pressure: req.body.pressure,
       fish: req.body.fish,
+      postMedia: req.body.postMedia,
+      description: req.body.description,
     });
 
     const post = await doc.save();
