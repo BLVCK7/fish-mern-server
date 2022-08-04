@@ -2,21 +2,15 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import multer from 'multer';
+import cookieParser from 'cookie-parser';
+import 'dotenv/config';
 
 import * as PostController from './Controllers/PostController.js';
+import router from './router/index.js';
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 const app = express();
-
-const uri =
-  'mongodb://root:root12345@cluster0-shard-00-00.6levu.mongodb.net:27017,cluster0-shard-00-01.6levu.mongodb.net:27017,cluster0-shard-00-02.6levu.mongodb.net:27017/post?ssl=true&replicaSet=atlas-lroog0-shard-0&authSource=admin&retryWrites=true&w=majority';
-
-mongoose
-  //   .connect(process.env.MONGODB_URI)
-  .connect(uri)
-  .then(() => console.log('DB работает'))
-  .catch((err) => console.log('DB ERROR: ', err));
 
 const storage = multer.diskStorage({
   destination: (_, __, cb) => {
@@ -34,7 +28,10 @@ const upload = multer({ storage });
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 app.use('/upload', express.static('uploads'));
+
+app.use('/api', router);
 
 app.post('/post', PostController.create);
 app.get('/post', PostController.getAllPosts);
@@ -44,4 +41,16 @@ app.post('/upload', upload.array('images'), (req, res) => {
   res.json(req.files.map((obj) => `/upload/${obj.originalname}`));
 });
 
-app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`));
+const start = async () => {
+  try {
+    await mongoose
+      .connect(process.env.URI)
+      .then(() => console.log('DB работает'))
+      .catch((err) => console.log('DB ERROR: ', err));
+    app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`));
+  } catch (error) {
+    console.log(`Ошибка подключения к серверу: ${error}`);
+  }
+};
+
+start();
