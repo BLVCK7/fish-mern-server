@@ -17,7 +17,6 @@ export const create = async (req, res) => {
 
     const post = await doc.save();
 
-    console.log(post);
     res.json(post);
   } catch (error) {
     console.log(error);
@@ -29,7 +28,7 @@ export const create = async (req, res) => {
 
 export const getAllPosts = async (req, res) => {
   try {
-    const posts = await PostModel.find().exec();
+    const posts = await PostModel.find();
 
     res.json(posts);
   } catch (error) {

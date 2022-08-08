@@ -23,6 +23,7 @@ export const registration = async (req, res, next) => {
     });
     return res.json(userData);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
@@ -38,6 +39,7 @@ export const login = async (req, res, next) => {
     });
     return res.json(userData);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
@@ -50,6 +52,7 @@ export const logout = async (req, res, next) => {
 
     return res.json(token);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
@@ -65,6 +68,7 @@ export const refresh = async (req, res, next) => {
     });
     return res.json(userData);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
@@ -75,6 +79,7 @@ export const getUsers = async (req, res, next) => {
 
     return res.json(users);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
@@ -88,6 +93,7 @@ export const activate = async (req, res) => {
     // console.log(post);
     // res.json(post);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
