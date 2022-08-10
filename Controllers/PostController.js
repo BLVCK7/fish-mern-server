@@ -3,6 +3,7 @@ import PostModel from '../Models/PostModel.js';
 export const create = async (req, res) => {
   try {
     const doc = new PostModel({
+      user: req.body.user,
       name: req.body.name,
       location: req.body.location,
       fishingDate: req.body.fishingDate,
@@ -28,7 +29,7 @@ export const create = async (req, res) => {
 
 export const getAllPosts = async (req, res) => {
   try {
-    const posts = await PostModel.find();
+    const posts = await PostModel.find().exec();
 
     res.json(posts);
   } catch (error) {
@@ -45,7 +46,6 @@ export const getOnePost = async (req, res) => {
 
     const post = await PostModel.findOne({ _id: id });
 
-    console.log(id);
     res.json(post);
   } catch (error) {
     console.log(error);
