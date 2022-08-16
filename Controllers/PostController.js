@@ -27,6 +27,40 @@ export const create = async (req, res) => {
   }
 };
 
+export const deletePost = async (req, res) => {
+  try {
+    const postId = req.params.id;
+
+    PostModel.findOneAndDelete(
+      {
+        _id: postId,
+      },
+      (err, doc) => {
+        if (err) {
+          console.log(error);
+          res.status(500).json({
+            message: 'Не удалось удалить статью',
+          });
+        }
+
+        if (!doc) {
+          return res.status(404).json({
+            message: 'Статья не найдена',
+          });
+        }
+        res.json({
+          success: true,
+        });
+      },
+    );
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: 'Не удалось получить статьи',
+    });
+  }
+};
+
 export const getAllPosts = async (req, res) => {
   try {
     const posts = await PostModel.find().exec();

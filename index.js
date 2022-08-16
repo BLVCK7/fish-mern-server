@@ -9,7 +9,6 @@ import * as PostController from './Controllers/PostController.js';
 import router from './router/index.js';
 
 import errorMiddleware from './middlewares/error-middleware.js';
-import { checkAuthMidWare } from './middlewares/auth-middleware.js';
 
 const PORT = process.env.PORT || 5000;
 
@@ -42,6 +41,7 @@ app.use('/auth', router);
 app.use(errorMiddleware); // Должен стоять последний в спике .use , т.к. в этом случае будет отрабатывать next() в асинхронщине и доходить то этого слоя, где и будет выдавать миддлвейр с ошибкой
 
 app.post('/post', PostController.create);
+app.delete('/post/:id', PostController.deletePost);
 app.get('/post', PostController.getAllPosts);
 app.get('/post/:id', PostController.getOnePost);
 app.post('/post/upload', PostController.getOnePost);
